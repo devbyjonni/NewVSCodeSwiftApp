@@ -25,8 +25,8 @@ Install the following extensions from the VS Code Marketplace:
 
 ```bash
 cd ~/Developer
-mkdir MySwiftProject
-cd MySwiftProject
+mkdir MyNewSwiftProject
+cd MyNewSwiftProject
 swift package init --type executable
 echo 'import Foundation
 
