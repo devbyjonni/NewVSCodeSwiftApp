@@ -32,7 +32,7 @@ echo 'import Foundation
 
 class App {
     func run() {
-        print("New Swift App Running")
+        print("New Swift App Running! 🚀")
     }
 }
 
