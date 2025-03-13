@@ -29,7 +29,15 @@ mkdir MySwiftProject
 cd MySwiftProject
 swift package init --type executable
 echo 'import Foundation
-print("New Swift App Running")' > Sources/MySwiftProject/main.swift
+
+class App {
+    func run() {
+        print("New Swift App Running")
+    }
+}
+
+let app = App()
+app.run()' > Sources/MySwiftProject/main.swift
 ```
 
 ### Verify Configuration
