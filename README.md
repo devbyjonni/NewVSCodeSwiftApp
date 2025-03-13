@@ -51,23 +51,24 @@ Download the recommended `.gitignore` file for Swift projects:
 curl -o .gitignore https://raw.githubusercontent.com/github/gitignore/main/Swift.gitignore 
 ```
 
-Initialize Git:
-
-```bash
-git init
-git add .
-git commit -m "Initial commit with Swift .gitignore"
-```
-
----
-
-## Open and Run the Project in VS Code
+### Open and Run the Project in VS Code
 
 ```bash
 code .
 swift build
 swift run
 ```
+
+### Initialize & Commit to Git
+
+```bash
+git init
+git add .
+git commit -m "Initial commit with Swift .gitignore"
+git log
+git status
+```
+
 
 ---
 
