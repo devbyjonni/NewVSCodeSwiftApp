@@ -37,7 +37,7 @@ class App {
 }
 
 let app = App()
-app.run()' > Sources/MyNewSwiftProject/main.swift
+app.run()' > Sources/main.swift
 ```
 
 ### Verify Configuration
