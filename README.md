@@ -41,7 +41,7 @@ swift run
 
 ---
 
-## Add Git Version Control
+##  Download .gitignore for Swift
 
 Download the recommended `.gitignore` file for Swift projects:
 
