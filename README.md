@@ -40,15 +40,6 @@ let app = App()
 app.run()' > Sources/main.swift
 ```
 
-### Verify Configuration
-
-```bash
-swift build
-swift run
-```
-
----
-
 ###  Download .gitignore for Swift
 
 Download the recommended `.gitignore` file for Swift projects:
@@ -58,6 +49,16 @@ Download the recommended `.gitignore` file for Swift projects:
 ```bash
 curl -o .gitignore https://raw.githubusercontent.com/github/gitignore/main/Swift.gitignore 
 ```
+
+### Verify Configuration
+
+```bash
+swift build
+swift run
+```
+
+---
+
 
 ### Open and Run the Project in VS Code
 
