@@ -24,20 +24,107 @@ Install the following extensions from the VS Code Marketplace:
 ## 🚀 Quick Setup Script
 
 ```bash
-cd ~/Developer
-mkdir MyNewSwiftProject
-cd MyNewSwiftProject
-swift package init --type executable
-echo 'import Foundation
+import Foundation
 
-class App {
-    func run() {
-        print("New Swift App Running! 🚀")
+let projectName = "MyNewSwiftProject"
+let homeDir = FileManager.default.homeDirectoryForCurrentUser
+let projectPath = homeDir.appendingPathComponent("Developer").appendingPathComponent(projectName)
+
+// Step 1: Create project directory
+do {
+    let developerPath = homeDir.appendingPathComponent("Developer")
+
+    if !FileManager.default.fileExists(atPath: developerPath.path) {
+        try FileManager.default.createDirectory(
+            at: developerPath, withIntermediateDirectories: true, attributes: nil)
     }
+
+    try FileManager.default.createDirectory(
+        at: projectPath, withIntermediateDirectories: true, attributes: nil)
+    print("✅ Created project directory: \(projectPath.path)")
+} catch {
+    print("❌ Error creating project directory: \(error)")
+    exit(1)
 }
 
-let app = App()
-app.run()' > Sources/main.swift
+// Step 2: Initialize Swift package
+let process = Process()
+process.launchPath = "/usr/bin/env"
+process.arguments = ["swift", "package", "init", "--type", "executable"]
+process.currentDirectoryPath = projectPath.path
+
+do {
+    try process.run()
+    process.waitUntilExit()
+    print("✅ Initialized Swift package")
+} catch {
+    print("❌ Error initializing Swift package: \(error)")
+    exit(1)
+}
+
+// Step 3: Locate `main.swift`
+let sourcesPath = projectPath.appendingPathComponent("Sources")
+let nestedSourcesPath = sourcesPath.appendingPathComponent(projectName)
+let mainSwiftFile: URL
+
+if FileManager.default.fileExists(atPath: nestedSourcesPath.path) {
+    // If `Sources/<ProjectName>/` exists, use that
+    mainSwiftFile = nestedSourcesPath.appendingPathComponent("main.swift")
+} else {
+    // Otherwise, use `Sources/main.swift`
+    mainSwiftFile = sourcesPath.appendingPathComponent("main.swift")
+}
+
+// Step 4: Overwrite `main.swift` with custom content
+let mainSwiftContent = """
+    import Foundation
+
+    class App {
+        func run() {
+            print("New Swift App Running! 🚀")
+        }
+    }
+
+    let app = App()
+    app.run()
+    """
+
+do {
+    try mainSwiftContent.write(to: mainSwiftFile, atomically: true, encoding: .utf8)
+    print("✅ Updated \(mainSwiftFile.path)")
+} catch {
+    print("❌ Error updating main.swift: \(error)")
+    exit(1)
+}
+
+// Step 5: Create VS Code settings for Swift development
+let vscodeFolder = projectPath.appendingPathComponent(".vscode")
+let settingsFile = vscodeFolder.appendingPathComponent("settings.json")
+
+let vscodeSettings: [String: Any] = [
+    "swift.path": "/usr/bin/swift",
+    "swift.lldb.suppressMissingModuleWarning": true,
+    "swift.lldb.displayFormat": "auto",
+]
+
+do {
+    try FileManager.default.createDirectory(
+        at: vscodeFolder, withIntermediateDirectories: true, attributes: nil)
+    let jsonData = try JSONSerialization.data(
+        withJSONObject: vscodeSettings, options: .prettyPrinted)
+    try jsonData.write(to: settingsFile)
+    print("✅ Created VS Code settings file")
+} catch {
+    print("❌ Error creating VS Code settings: \(error)")
+    exit(1)
+}
+
+print("\n🚀 Swift project setup completed successfully! 🎉")
+print("👉 Navigate to the project: cd \(projectPath.path)")
+print("👉 Open in VS Code: code \(projectPath.path)")
+print("👉 Build the project: swift build")
+print("👉 Run the project: swift run")
+
 ```
 
 ###  Download .gitignore for Swift
